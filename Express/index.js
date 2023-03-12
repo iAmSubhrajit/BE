@@ -7,7 +7,7 @@ const app = express();
 //to get the data from client where body is in form of json 
 app.use(express.json());
 //to get the data from a form where the body format is  urlencoded()
-app.use(express.urlencoded())
+// app.use(express.urlencoded())
 
 const products = [
     {
