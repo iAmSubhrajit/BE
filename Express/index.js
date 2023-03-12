@@ -154,7 +154,8 @@ app.patch('/products/:id', (req, res) => {
     // find index
     const elementIndex = products.findIndex((el) => el.id === +req.params.id)
     // update element at the index
-    products[elementIndex] = { ...products[elementIndex], ...req.body };
+    if (elementIndex !== -1)
+        products[elementIndex] = { ...products[elementIndex], ...req.body };
     res.send(products)
 })
 
@@ -163,7 +164,8 @@ app.delete('/products/:id', (req, res) => {
     // find index
     const elementIndex = products.findIndex((el) => el.id === +req.params.id)
     //delete the elemet
-    products.splice(elementIndex, 1)
+    if (elementIndex !== -1)
+        products.splice(elementIndex, 1)
     res.send(products)
 })
 //see 1hr 45min
