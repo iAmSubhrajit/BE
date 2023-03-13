@@ -5,7 +5,17 @@ const app = express();
 const dotEnv = require('dotenv')
 dotEnv.config();
 
+app.use(express.json())
+
+const productRouter = require('./routes/productRoutes')
+const userRouter = require('./routes/userRoutes')
+
 const { checkLogInStstus, checkUser } = require('./middleware')
+
+//using productRouter 
+app.use('/products', productRouter)
+//using userRouter
+app.use('/users', userRouter)
 
 // app.use(checkUser)
 // app.use(checkLogInStstus)
@@ -25,42 +35,39 @@ const { checkLogInStstus, checkUser } = require('./middleware')
 
 //Using Routes
 //product route
-app.route('/products')
-    .get((req, res) => {
-        res.send('Products Page -- GET')
-    })
-    .post((req, res) => {
-        res.send('Products Page -- POST')
-    })
-    .patch((req, res) => {
-        res.send('Products Page -- PATCH')
-    })
+// app.route('/products')
+//     .get((req, res) => {
+//         res.send('Products Page -- GET')
+//     })
+//     .post((req, res) => {
+//         res.send('Products Page -- POST')
+//     })
+//     .patch((req, res) => {
+//         res.send('Products Page -- PATCH')
+//     })
 
-app.route('/products/:id')
-    .get((req, res) => {
-        res.send('Products Page -- GET')
-    })
-    .post((req, res) => {
-        res.send('Products Page -- POST')
-    })
-    .patch((req, res) => {
-        res.send('Products Page -- PATCH')
-    })
+// app.route('/products/:id')
+//     .get((req, res) => {
+//         res.send('Products Page -- GET')
+//     })
+//     .post((req, res) => {
+//         res.send('Products Page -- POST')
+//     })
+//     .patch((req, res) => {
+//         res.send('Products Page -- PATCH')
+//     })
 
 //userRoute
-app.route('/users/:id')
-    .get((req, res) => {
-        res.send('Users Page -- GET')
-    })
-    .post((req, res) => {
-        res.send('Users Page -- POST')
-    })
-    .patch((req, res) => {
-        res.send('Users Page -- PATCH')
-    })
-
-
-
+// app.route('/users/:id')
+//     .get((req, res) => {
+//         res.send('Users Page -- GET')
+//     })
+//     .post((req, res) => {
+//         res.send('Users Page -- POST')
+//     })
+//     .patch((req, res) => {
+//         res.send('Users Page -- PATCH')
+//     })
 
 
 app.get('/Profile', checkLogInStstus, (req, res) => {
