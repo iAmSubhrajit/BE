@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 
+//dotenv -> storing configuration in .env file separate from code file
+const dotEnv = require('dotenv')
+dotEnv.config();
+
 const { checkLogInStstus, checkUser } = require('./middleware')
 
 // app.use(checkUser)
@@ -70,8 +74,9 @@ app.get('/orders', checkLogInStstus, (req, res) => {
 
 
 
+const PORT = process.env.PORT || 3000;
 
-app.listen(8080, () => {
-    console.log('app running at 8080');
+app.listen(PORT, () => {
+    console.log(`app running at ${PORT}`);
 })
 
