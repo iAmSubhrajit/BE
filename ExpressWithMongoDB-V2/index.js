@@ -8,7 +8,9 @@ dotenv.config();
 app.use(express.json())
 
 const userRoute = require('./src/routes/userRoutes')
+const productRoute = require('./src/routes/productRoutes')
 app.use('/user', userRoute)
+app.use('/product', productRoute)
 
 //mongoDB connection
 require('./connectDB')
