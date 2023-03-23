@@ -37,6 +37,11 @@ const userSchema = new Schema({
             values: ['ursa', 'juno'],
             message: (props) => `${props.value} is not supported batch`
         }
+    },
+    role: {
+        type: String,
+        default: 'user',
+        enum: ['user', 'admin', 'superAdmin']
     }
 }, { versionKey: false })
 

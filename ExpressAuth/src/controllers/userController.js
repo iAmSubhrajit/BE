@@ -2,16 +2,18 @@ const UserModel = require("../models/userModel")
 
 const bcrypt = require('bcrypt')
 
+const jwt = require('jsonwebtoken')
+
 const getUsers = (req, res) => {
-    UserModel.find()
+    UserModel.find().select({ password: 0, _id: 0 })
         .then(data => res.send(data))
-        .catch(error => res.isPasswordMatch(400).send({ message: error.message }))
+        .catch(error => res.status(400).send({ message: error.message }))
 }
 
 const getUser = (req, res) => {
     UserModel.findOne({ _id: req.params.id })
         .then(data => res.send(data))
-        .catch(error => res.isPasswordMatch(404).send({ message: error.message }))
+        .catch(error => res.status(404).send({ message: error.message }))
 }
 
 const createUser = (req, res) => {
@@ -31,7 +33,19 @@ const loginUser = (req, res) => {
             const isPasswordMatch = bcrypt.compareSync(password, user.password);
 
             if (isPasswordMatch) {
-                res.send('successfully logged in')
+                //send JWT token
+                const token = jwt.sign({
+                    id: user._id,
+                    email: user.email
+                }, process.env.SECRET_KEY)
+
+                console.log('token', token);
+                // res.send('successfully logged in')
+                res.json({
+                    message: 'successfully logged in',
+                    token,
+                })
+
             }
             else {
                 res.send('Password is incorrect')
@@ -42,7 +56,12 @@ const loginUser = (req, res) => {
 }
 
 const getUserProfile = (req, res) => {
-    res.send('Profile')
+
+    UserModel.findById(req.userId).select({ password: 0, _id: 0 })
+        .then(user => res.send(user))
+        .catch(err => res.send(err))
+
+
 }
 
 
