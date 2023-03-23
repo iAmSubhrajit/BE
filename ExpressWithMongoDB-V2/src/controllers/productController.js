@@ -15,7 +15,8 @@ const createProductController = (req, res) => {
             // console.log("data", data);
             res.send('Product created successfully')
         }))
-        .catch(err => res.send({ message: err.message }))
+        // .catch(err => res.send({ message: err.message }))
+        .catch(err => res.send(err))
 
 }
 
