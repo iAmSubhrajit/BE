@@ -13,7 +13,15 @@ const productSchema = new Schema({
         required: [true, 'Why no category'],
         // uppercase: true,
         lowercase: true,
-        enum: ['mobile', 'appliances', 'laptop', 'tablet'] //strictly equal
+        // enum: ['mobile', 'appliances', 'laptop', 'tablet'] //strictly equal
+        enum: {
+            values: ['mobile', 'appliances', 'laptop', 'tablet'],
+            // message: `value is not supported`
+            message: (data) => {
+                console.log(data);
+                return `${data.value} is not supported`
+            }
+        }
     },
     price: {
         type: Number,
@@ -38,25 +46,27 @@ const productSchema = new Schema({
             //     return `validation failed for ${DATA.path}`
             // },
             // isAsync: true ->(to use validator as async) - Depricated now
-            validator: async (data) => {
-                // return Promise.resolve('data')
-                // return Promise.reject(`${data} is not valid`)
-                // return await Promise.reject(`${data} is not valid`)
-                // return await Promise.resolve(false) //dont pass false in resolve-> it will work as reject
+            // validator: async (data) => {
+            //     // return Promise.resolve('data')
+            //     // return Promise.reject(`${data} is not valid`)
+            //     // return await Promise.reject(`${data} is not valid`)
+            //     // return await Promise.resolve(false) // mongoose assumes the validator failed and creates an error with the given `message`
 
-                new Promise((res, rej) => {
-                    // res('resolved')
-                    rej('error')
-                })
-                    .then((data) => {
-                        console.log(data);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        return false
-                    })
+            //     new Promise((res, rej) => {
+            //         // res('resolved')
+            //         rej('error')
+            //     })
+            //         .then((data) => {
+            //             console.log(data);
+            //         })
+            //         .catch((error) => {
+            //             console.log(error);
+            //             return false
+            //         })
 
-            }
+            // }
+            validator: () => Promise.resolve(false),
+            message: 'Colors validation failed'
 
         }
     },
