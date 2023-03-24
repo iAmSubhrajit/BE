@@ -22,7 +22,7 @@ const auth = (req, res, next) => {
 const roleBasedAuthorization = (req, res, next) => {
     UserModel.findById(req.userId)
         .then(data => {
-            if (data.role === 'admin' || data.role === 'admin') {
+            if (data.role === 'admin' || data.role === 'superAdmin') {
                 next()
             }
             else {
