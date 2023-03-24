@@ -4,7 +4,8 @@ const userSchema = new Schema({
     name: {
         type: String,
         required: true,
-        minLength: [6, 'minimum length should be 6 for name']
+        minLength: [6, 'minimum length should be 6 for name'],
+        unique: true
     },
     email: {
         type: String,
@@ -16,7 +17,8 @@ const userSchema = new Schema({
             },
             message: (props) => `${props.value} is not a valid email`
         },
-        lowercase: true
+        lowercase: true,
+        unique: true
     },
     password: {
         type: String,
@@ -25,7 +27,7 @@ const userSchema = new Schema({
         // maxLength: 15
     },
     mobile: {
-        type: String,
+        type: Number,
         required: [true, 'user mobile number required'],
         minLength: 10,
         maxLength: 10
